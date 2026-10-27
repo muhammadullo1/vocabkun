@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#153b2c">
+  <meta name="description" content="VocabKun — inglizcha so‘zlarni har kuni o‘rganish va takrorlash.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <title>VocabKun — English vocabulary</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f4f7f1;--surface:#fff;--ink:#17291f;--muted:#65766a;--green:#1d6b45;--line:#dce6dc;--soft:#e7f2e9;--bad:#a63838}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    @media(prefers-color-scheme:dark){:root{--bg:#101914;--surface:#1b2820;--ink:#eff8f0;--muted:#b0c0b3;--green:#78d5a0;--line:#35463a;--soft:#263c2d;--bad:#ff9696}}
+    .wrap{max-width:820px;margin:auto;padding:16px 14px 44px}.hero{background:#153b2c;color:#fff;border-radius:24px;padding:24px 22px;margin:6px 0 18px}
+    .brand{font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;font-weight:800}.hero h1{font-size:clamp(28px,7vw,42px);margin:9px 0}.hero p{margin:0;color:#dcefe2;line-height:1.5}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px}.stat{background:#ffffff18;border:1px solid #ffffff24;padding:10px;border-radius:14px}.stat b{display:block;font-size:21px}.stat span{font-size:12px;color:#dcefe2}
+    .tabs{display:flex;gap:8px;overflow:auto;margin:0 0 14px}.tab,.btn{border:0;border-radius:13px;padding:12px 15px;font:inherit;font-weight:750;cursor:pointer}.tab{background:var(--surface);border:1px solid var(--line);white-space:nowrap;color:var(--ink)}.tab.active,.btn.primary{background:var(--green);color:#fff}.btn.secondary{background:var(--soft);color:var(--ink)}.btn:disabled{opacity:.45;cursor:default}
+    .panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 6px 22px #102b1510}.panel h2{font-size:20px;margin:0 0 6px}.muted{color:var(--muted);font-size:14px;line-height:1.5}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.input,.select{width:100%;padding:13px 14px;border-radius:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+    .word-card{padding:20px 4px 12px;text-align:center}.eyebrow{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase}.bigword{font-size:clamp(32px,9vw,46px);font-weight:850;letter-spacing:-.04em;margin:8px 0}.translation{font-size:20px;font-weight:700;color:var(--green)}.example{margin:14px auto 0;max-width:540px;line-height:1.55}.example small{display:block;color:var(--muted);margin-top:4px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.controls .btn{flex:1;min-width:120px}.answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:17px 0}.answer{padding:15px 10px;border-radius:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:650;cursor:pointer}.answer.correct{border-color:#2b9b5f;background:#dff7e7;color:#14552f}.answer.wrong{border-color:#d55;background:#ffe5e5;color:#8b2222}.feedback{font-weight:750;min-height:24px}.list{display:grid;gap:8px;margin-top:14px}.item{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:14px}.item-main{min-width:0;flex:1}.item b{display:block;overflow-wrap:anywhere}.item small{display:block;color:var(--muted);margin-top:3px}.mini{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 10px;font-weight:700;cursor:pointer}.progress{height:9px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:var(--green);width:0}.hidden{display:none!important}.status{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5}.note{background:var(--soft);border-radius:14px;padding:12px;font-size:13px;line-height:1.5;margin-top:12px}
+    footer{text-align:center;color:var(--muted);font-size:12px;padding:16px}
+    @media(max-width:440px){.wrap{padding:10px}.hero{padding:20px 17px}.stats{gap:6px}.stat{padding:8px}.stat b{font-size:18px}.panel{padding:15px}.answer-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">🌱 VOCABKUN</div>
+    <h1>Har kuni oz-ozdan.</h1>
+    <p>Inglizcha so‘zlarni o‘rgan, eslab qol va IELTS sari qadam tashla.</p>
+    <div class="stats">
+      <div class="stat"><b id="totalCount">1,800+</b><span>lug‘atdagi so‘z</span></div>
+      <div class="stat"><b id="learnedCount">0</b><span>o‘rganganing</span></div>
+      <div class="stat"><b id="streakCount">0</b><span>bugungi test balli</span></div>
+    </div>
+  </header>
+  <nav class="tabs" aria-label="Asosiy menyu">
+    <button class="tab active" data-tab="today">📘 Bugungi so‘z</button>
+    <button class="tab" data-tab="quiz">🧠 Test</button>
+    <button class="tab" data-tab="dictionary">🔎 Lug‘at</button>
+    <button class="tab" data-tab="reminders">🔔 Eslatmalar</button>
+  </nav>
+
+  <main>
+    <section id="today" class="panel">
+      <h2>Bugungi vocabulary</h2><p class="muted">So‘zni ko‘r, talaffuzini eshit va tarjimasini eslab qol.</p>
+      <div class="word-card">
+        <div class="eyebrow" id="wordCounter">1-so‘z</div><div class="bigword" id="wordEnglish">Improve</div>
+        <div class="translation" id="wordUzbek">Yaxshilamoq</div>
+        <div class="example" id="wordExample">I want to improve my English.<small>Men ingliz tilimni yaxshilamoqchiman.</small></div>
+      </div>
+      <div class="controls"><button class="btn secondary" id="speakBtn">🔊 Talaffuz</button><button class="btn secondary" id="hideBtn">🙈 Tarjimani yashir</button><button class="btn primary" id="learnBtn">✓ O‘rgandim</button><button class="btn primary" id="nextWordBtn">Keyingi so‘z →</button></div>
+      <div class="progress"><span id="progressBar"></span></div><p class="muted" id="progressLabel">Kunlik maqsad: 10 ta so‘z</p>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <h2>🧠 Tezkor test</h2><p class="muted">Inglizcha so‘zning o‘zbekcha ma’nosini tanla.</p>
+      <div class="word-card"><div class="eyebrow" id="quizCounter">Savol 1 / 10</div><div class="bigword" id="quizEnglish">Improve</div></div>
+      <div class="answer-grid" id="answers"></div><div class="feedback" id="quizFeedback" aria-live="polite"></div>
+      <div class="controls"><button class="btn primary" id="nextQuestion">Keyingi savol →</button><button class="btn secondary" id="restartQuiz">Testni yangilash ↻</button></div>
+    </section>
+
+    <section id="dictionary" class="panel hidden">
+      <h2>🔎 Lug‘at</h2><p class="muted">Inglizcha yoki o‘zbekcha so‘z bilan qidir.</p>
+      <input id="searchInput" class="input" type="search" placeholder="Masalan: improve yoki yaxshilamoq" autocomplete="off">
+      <div class="list" id="wordList"></div><p class="status" id="searchStatus"></p>
+    </section>
+
+    <section id="reminders" class="panel hidden">
+      <h2>🔔 Fon bildirishnomalari</h2>
+      <p class="muted">Telefonning o‘zida rejalashtiriladigan mahalliy bildirishnomalar. Internet talab qilinmaydi.</p>
+      <label for="intervalSelect" class="muted">Eslatma oralig‘i</label>
+      <select class="select" id="intervalSelect"><option value="5">Har 5 daqiqada</option><option value="10" selected>Har 10 daqiqada</option></select>
+      <div class="controls"><button class="btn primary" id="enablePush">🔔 Bildirishnomani yoqish</button><button class="btn secondary" id="disablePush">To‘xtatish</button></div>
+      <div class="status" id="pushStatus" aria-live="polite">Bildirishnomalar hali sozlanmagan.</div>
+      <div class="note"><b>Kerak bo‘ladi:</b> Netlify HTTPS, VAPID kalitlari va Netlify Blobs. Bildirishnomalar telefon brauzer ruxsati bilan ishlaydi. Android’da Chrome va batareya tejash sozlamalari ham ta’sir qilishi mumkin.</div>
+    </section>
+  </main>
+  <footer>VocabKun · English → Uzbek · O‘rganish muntazamlikdan boshlanadi.</footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let words = [], current = 0, quiz = [], qIndex = 0, quizScore = 0, quizAnswered = false;
+let learned = new Set(JSON.parse(localStorage.getItem('vk-learned') || '[]'));
+let todays = Number(localStorage.getItem('vk-today-score') || 0);
+let currentDate = new Date().toDateString();
+let todaysDate = localStorage.getItem('vk-score-date');
+if(todaysDate !== currentDate){todays=0;localStorage.setItem('vk-score-date',currentDate);localStorage.setItem('vk-today-score','0');}
+let translationVisible = true;
+
+async function init(){
+  try { const r = await fetch('/words.json'); words = await r.json(); }
+  catch(e){ $('wordEnglish').textContent='Lug‘at yuklanmadi'; return; }
+  $('totalCount').textContent=words.length.toLocaleString();
+  current = Number(localStorage.getItem('vk-current') || 0) % words.length;
+  updateWord(); updateStats(); startQuiz(); renderList();
+  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+  $('nextWordBtn').addEventListener('click',()=>{current=(current+1)%words.length;localStorage.setItem('vk-current',String(current));translationVisible=true;updateWord();});
+  $('learnBtn').addEventListener('click',()=>{learned.add(words[current].en);localStorage.setItem('vk-learned',JSON.stringify([...learned]));updateStats();$('learnBtn').textContent='✓ Saqlandi';setTimeout(()=>$('learnBtn').textContent='✓ O‘rgandim',900);});
+  $('hideBtn').addEventListener('click',()=>{translationVisible=!translationVisible;updateWord();});
+  $('speakBtn').addEventListener('click',()=>speak(words[current].en));
+  $('nextQuestion').addEventListener('click',()=>{if(qIndex>=quiz.length-1){startQuiz();return;}qIndex++;quizAnswered=false;renderQuestion();});
+  $('restartQuiz').addEventListener('click',startQuiz);
+  $('searchInput').addEventListener('input',renderList);
+  $('enablePush').addEventListener('click',enablePush);
+  $('disablePush').addEventListener('click',disablePush);
+  $('intervalSelect').addEventListener('change',()=>localStorage.setItem('vk-interval',$('intervalSelect').value));
+  $('intervalSelect').value=localStorage.getItem('vk-interval')||'10';
+  if('serviceWorker' in navigator){try{await navigator.serviceWorker.register('/sw.js');}catch(e){console.warn('SW registration failed',e);}}
+  const savedSub=localStorage.getItem('vk-push-enabled');
+  if(savedSub==='yes') $('pushStatus').textContent='Push avval yoqilgan. Eslatma oralig‘ini o‘zgartirish uchun qayta yoq.';
+}
+function switchTab(tab){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hidden',s.id!==tab));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='dictionary')renderList();}
+function updateWord(){const w=words[current];if(!w)return;$('wordCounter').textContent=`${current+1}-so‘z / ${words.length}`;$('wordEnglish').textContent=w.en;$('wordUzbek').textContent=translationVisible?w.uz:'••••••••';$('wordExample').innerHTML=translationVisible?`${escapeHtml(w.example||'')}<small>${escapeHtml(w.exampleUz||'')}</small>`:'Tarjimani ko‘rish uchun “Tarjimani yashir” tugmasini bosing.';$('hideBtn').textContent=translationVisible?'🙈 Tarjimani yashir':'👁 Tarjimani ko‘rsat';$('progressBar').style.width=`${Math.min(100,learned.size/10*100)}%`;$('progressLabel').textContent=`${learned.size} ta so‘z belgilangan · kunlik maqsad: 10 ta`;}
+function updateStats(){$('learnedCount').textContent=learned.size;$('streakCount').textContent=todays;}
+function speak(word){if(!('speechSynthesis'in window))return; speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(word);u.lang='en-US';u.rate=.82;speechSynthesis.speak(u);}
+function startQuiz(){quiz=[...words].sort(()=>Math.random()-.5).slice(0,10);qIndex=0;quizScore=0;quizAnswered=false;$('quizFeedback').textContent='';renderQuestion();}
+function renderQuestion(){const w=quiz[qIndex];$('quizCounter').textContent=`Savol ${qIndex+1} / ${quiz.length}`;$('quizEnglish').textContent=w.en;$('quizFeedback').textContent='';$('nextQuestion').textContent=qIndex===quiz.length-1?'Yakunlash / yangi test':'Keyingi savol →';const distractors=words.filter(x=>x.en!==w.en&&x.uz!==w.uz).sort(()=>Math.random()-.5).slice(0,3).map(x=>x.uz);const opts=[w.uz,...distractors].sort(()=>Math.random()-.5);$('answers').innerHTML='';opts.forEach(opt=>{const b=document.createElement('button');b.className='answer';b.textContent=opt;b.addEventListener('click',()=>chooseAnswer(b,opt,w));$('answers').appendChild(b);});}
+function chooseAnswer(btn,opt,w){if(quizAnswered)return;quizAnswered=true;document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(opt===w.uz){btn.classList.add('correct');$('quizFeedback').textContent='To‘g‘ri! 🎉';quizScore++;todays++;localStorage.setItem('vk-today-score',String(todays));}else{btn.classList.add('wrong');document.querySelectorAll('.answer').forEach(b=>{if(b.textContent===w.uz)b.classList.add('correct');});$('quizFeedback').textContent=`To‘g‘ri javob: ${w.uz}`;}updateStats();}
+function renderList(){if(!words.length)return;const q=($('searchInput').value||'').trim().toLowerCase();const found=words.filter(w=>w.en.toLowerCase().includes(q)||w.uz.toLowerCase().includes(q)).slice(0,80);$('wordList').innerHTML='';found.forEach(w=>{const div=document.createElement('div');div.className='item';const main=document.createElement('div');main.className='item-main';const b=document.createElement('b');b.textContent=w.en;const small=document.createElement('small');small.textContent=w.uz;main.append(b,small);const sp=document.createElement('button');sp.className='mini';sp.textContent='🔊';sp.setAttribute('aria-label','Talaffuz');sp.onclick=()=>speak(w.en);const save=document.createElement('button');save.className='mini';save.textContent=learned.has(w.en)?'✓':'＋';save.onclick=()=>{if(learned.has(w.en))learned.delete(w.en);else learned.add(w.en);localStorage.setItem('vk-learned',JSON.stringify([...learned]));updateStats();renderList();};div.append(main,sp,save);$('wordList').append(div);});$('searchStatus').textContent=`${found.length} ta natija ko‘rsatilmoqda (ko‘pi bilan 80).`;}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function urlB64ToUint8Array(base64String){const padding='='.repeat((4-base64String.length%4)%4);const base64=(base64String+padding).replace(/-/g,'+').replace(/_/g,'/');const raw=atob(base64);return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)));}
+async function enablePush(){
+  const status=$('pushStatus');
+  if(window.VocabKunAndroid){const interval=Number($('intervalSelect').value);VocabKunAndroid.startReminders(interval);localStorage.setItem('vk-interval',String(interval));status.textContent=`Mahalliy eslatma yoqildi: har ${interval} daqiqada.`;return;}if(!('serviceWorker'in navigator)||!('PushManager'in window)||!('Notification'in window)){status.textContent='Bu brauzer Web Push’ni qo‘llamaydi. Android’da Chrome orqali och.';return;}
+  if(!window.isSecureContext){status.textContent='HTTPS kerak. Netlify sayti HTTPS bilan ishlashi lozim.';return;}
+  try{
+    status.textContent='Bildirishnoma ruxsati so‘ralmoqda…';
+    const permission=await Notification.requestPermission();if(permission!=='granted'){status.textContent='Bildirishnomaga ruxsat berilmadi.';return;}
+    const cfgRes=await fetch('/.netlify/functions/push-config');if(!cfgRes.ok)throw new Error('Push konfiguratsiyasi topilmadi. Netlify VAPID_PUBLIC_KEY sozlanganini tekshir.');const cfg=await cfgRes.json();
+    if(!cfg.publicKey)throw new Error('Netlify’da VAPID_PUBLIC_KEY environment variable yo‘q.');
+    const reg=await navigator.serviceWorker.ready;
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlB64ToUint8Array(cfg.publicKey)});
+    const interval=Number($('intervalSelect').value);
+    const res=await fetch('/.netlify/functions/register-push',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subscription:sub,interval})});
+    if(!res.ok)throw new Error((await res.text())||'Subscription saqlanmadi.');
+    localStorage.setItem('vk-push-enabled','yes');localStorage.setItem('vk-interval',String(interval));status.textContent=`Tayyor! Har ${interval} daqiqada so‘z kelishi sozlandi. Avval sinov xabari kelishi mumkin.`;
+  }catch(e){status.textContent='Xatolik: '+e.message+' — Netlify Functions va environment variables sozlanganini tekshir.';}
+}
+async function disablePush(){if(window.VocabKunAndroid){VocabKunAndroid.stopReminders();$('pushStatus').textContent='Eslatmalar to‘xtatildi.';return;}try{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.getSubscription();if(sub){await fetch('/.netlify/functions/unregister-push',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint})});await sub.unsubscribe();}localStorage.removeItem('vk-push-enabled');$('pushStatus').textContent='Bildirishnoma o‘chirildi.';}catch(e){$('pushStatus').textContent='O‘chirishda xatolik: '+e.message;}}
+init();
+</script>
+</body>
+</html>
